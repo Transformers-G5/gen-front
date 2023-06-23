@@ -28,8 +28,6 @@ const Test = () => {
 
   const [outputResult, setOutputResult] = useState<string>("");
 
-  const [isLoading, setIsLoading] = useState(false)
-
   interface sItems {
     item: any;
     idx: any;
@@ -103,10 +101,10 @@ const Test = () => {
     //   max_len: 500,
     // };
     let data;
-    if (selectedItem.idx === 0) data = { prompt, max_len: 500 };
-    if (selectedItem.idx === 1) data = { prompt: "", max_len: 500 };
-    if (selectedItem.idx === 2) data = { prompt: "", max_len: 500, name: "" };
-    if (selectedItem.idx === 3) data = { prompt: "", max_len: 500, name: "" };
+    if (selectedItem.idx === 0) data = { prompt, max_len: 200 };
+    if (selectedItem.idx === 1) data = { prompt: "", max_len: 200, name: "" };
+    if (selectedItem.idx === 2) data = { prompt: "", max_len: 200, name: "" };
+    if (selectedItem.idx === 3) data = { prompt: "", max_len: 200, name: "" };
     if (selectedItem.idx === 4)
       data = { prompt, numberOfWords: 30, language: "english" };
     if (selectedItem.idx === 5)
@@ -238,11 +236,14 @@ const Test = () => {
               sequence={[
                 "Generating output.",
                 1000,
-                "Generating output. Using Model X.",
+                `Generating output. Using Model ${selectedItem.item}.`,
                 1000,
                 "Reading data from server.",
                 1000,
                 outputResult,
+                () => {
+                  console.log("ENDED");
+                },
                 // output_text_1,
                 // 1000,
                 // output_text_2,

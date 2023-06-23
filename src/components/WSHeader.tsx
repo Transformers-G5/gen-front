@@ -89,7 +89,7 @@ export default () => {
               height={50}
               alt="Float UI logo"
             /> */}
-            BLOG-GN
+            CON-GEN
           </a>
           <div className="lg:hidden">
             <button
@@ -174,7 +174,8 @@ export default () => {
           </ul>
         </div>
       </div>
-      <nav className="border-b">
+      <div className="border-b mt-5"></div>
+      {/* <nav className="border-b">
         <ul className="flex items-center gap-x-3 max-w-screen-xl mx-auto px-4 overflow-x-auto lg:px-8">
           {submenuNav.map((item, idx) => {
             return (
@@ -195,7 +196,7 @@ export default () => {
             );
           })}
         </ul>
-      </nav>
+      </nav> */}
     </header>
   );
 };

@@ -84,12 +84,8 @@ const ContentPreviewCard: React.FC<MyComponentProps> = ({
   };
 
   return (
-    <div className="relative max-w-sm border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-      <img
-        className="rounded-t-lg absolute z-30"
-        src={`https://picsum.photos/seed/${head[0]}${head[1]}${head[2]}/1000/200`}
-      />
-      <div className="pb-0 relative z-50 bg-[#ffffff88]">
+    <div className="max-w-sm border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 p-4 flex flex-col justify-between">
+      <div className="bg-violet-800">
         <a href="#">
           <h5 className="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
             {head}
@@ -98,9 +94,9 @@ const ContentPreviewCard: React.FC<MyComponentProps> = ({
         <p className="mb-3 font-normal text-sm text-gray-700 dark:text-gray-400">
           {truncateString(desc)}
         </p>
-        <div className="flex">
-          <div className="text-xs text-gray-600">DATE</div>
-        </div>
+      </div>
+      <div className=" bg-green-600">
+        <div className="text-xs text-gray-600">DATE</div>
       </div>
     </div>
   );
@@ -108,17 +104,20 @@ const ContentPreviewCard: React.FC<MyComponentProps> = ({
 
 const Gallery = () => {
   return (
-    <div className="h-full px-10 py-10">
-      <div className="grid grid-cols-4 gap-6">
-        {data.map((item) => (
-          <>
-            <ContentPreviewCard
-              head={item.heading}
-              desc={item.description}
-              date={item.date}
-            />
-          </>
-        ))}
+    <div className="h-full">
+      <Header />
+      <div className="mt-10 px-16">
+        <div className="grid grid-cols-4 gap-6">
+          {data.map((item) => (
+            <>
+              <ContentPreviewCard
+                head={item.heading}
+                desc={item.description}
+                date={item.date}
+              />
+            </>
+          ))}
+        </div>
       </div>
     </div>
   );

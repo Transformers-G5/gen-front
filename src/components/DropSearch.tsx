@@ -143,7 +143,9 @@ export default (props: Selector) => {
                 role="option"
                 aria-selected={props.selectedItem.idx == idx ? true : false}
                 className={`${
-                  props.selectedItem.idx == idx ? "text-indigo-600 bg-indigo-50" : ""
+                  props.selectedItem.idx == idx
+                    ? "text-indigo-600 bg-indigo-50"
+                    : ""
                 } menu-el-js flex items-center justify-between px-3 py-2 cursor-default duration-150 text-gray-500 hover:text-indigo-600 hover:bg-indigo-50`}
               >
                 {el}
