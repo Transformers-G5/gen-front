@@ -9,10 +9,14 @@ import pp3 from "../images/stephanie.jpg"
 import blog from "../images/blog.jpg"
 import marketing from "../images/onlineMarketing.jpg"
 import social from "../images/socialMedia.jpg"
+import { FaFacebookF } from 'react-icons/fa';
+import { BsTwitter } from 'react-icons/bs';
+import { BsInstagram } from 'react-icons/bs';
+
 
 function Landing() {
   return (
-    <div>
+    <div className='font-sans'>
         {/* First Page */}
         <div
           className="h-screen w-full"
@@ -20,9 +24,9 @@ function Landing() {
             <div className="w-full h-full relative">
               <span className="text-l text-green-950 font-bold absolute top-0 left-0 p-10">Blog-GN</span>
               <div className="flex flex-col justify-end items-start h-full p-10">
-                <h1 className="text-7xl font-bold text-green-700 mb-20 f w-1/2">
+                <h1 className="text-7xl font-bold text-[#888f70] mb-20 f w-1/2">
                   Inspire. Create.  <br/>
-                  <span className=''> Automate. </span>
+                  <span className='text-[#3f4726]'> Automate. </span>
                 </h1>
                 <p className="text-2xl font-semibold text-black w-1/2">
                   We do all the research, strategy, <br/>
@@ -30,7 +34,7 @@ function Landing() {
                   on your product.</p>
                 <Link
                   to="/workspace"
-                  className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-8 mt-5 rounded-full"
+                  className="bg-[#3f4726] hover:bg-[#888f70] text-white font-bold py-2 px-8 mt-5 rounded-full"
                 >
                   Start Generating
                 </Link>
@@ -69,9 +73,10 @@ function Landing() {
                 </div>
                 <div className="text-center p-4 flex flex-col items-center">
                   <h2 className="text-2xl font-bold m-4 ">Marketing</h2>
-                  <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-8 mt-4 rounded-full">
+                  <Link to="/workspace"
+                    className="bg-[#3f4726] hover:bg-[#888f70] text-white font-bold py-2 px-8 mt-4 rounded-full">
                     Learn More
-                  </button>
+                </Link>
                 </div>
               </div>
               <div className="w-80 h-80 bg-white rounded-3xl shadow-lg mx-4">
@@ -80,9 +85,10 @@ function Landing() {
                 </div>
                 <div className="text-center p-4 flex flex-col items-center">
                   <h2 className="text-2xl font-bold m-4 ">Blogging</h2>
-                  <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-8 mt-4 rounded-full">
-                    Learn More
-                  </button>
+                  <Link to="/workspace"
+                    className="bg-[#3f4726] hover:bg-[#888f70] text-white font-bold py-2 px-8 mt-4 rounded-full">
+                  Learn More
+                </Link>
                 </div>
               </div>
               <div className="w-80 h-80 bg-white rounded-3xl shadow-lg mx-4">
@@ -91,9 +97,10 @@ function Landing() {
                 </div>
                 <div className="text-center p-4 flex flex-col items-center">
                   <h2 className="text-2xl font-bold m-4 ">Social Media Caption</h2>
-                  <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-8 mt-4 rounded-full">
+                  <Link to="/workspace"
+                    className="bg-[#3f4726] hover:bg-[#888f70] text-white font-bold py-2 px-8 mt-4 rounded-full">
                     Learn More
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -179,9 +186,9 @@ function Landing() {
                     />
                   </div>
                   <div className="w-2/3 p-4">
-                    <p className="text-gray-700">Boost your product and service's credibility by adding testimonials from your clients. People love recommendations so feedback from others who've tried it is invaluable.</p>
+                    <p className="text-gray-700">Blog-GN transformed our content creation process. Generating high-quality blog posts and social media content effortlessly. Highly recommended!</p>
                     <br></br>
-                    <p className="text-md font-semibold mb-2">- Wendy Salinas, Rolk Inc</p>
+                    <p className="text-md font-semibold mb-2">- Thomas Larson, Buchanan Ventures</p>
                   </div>
                 </div>
               </div>
@@ -195,7 +202,7 @@ function Landing() {
                     />
                   </div>
                   <div className="w-2/3 p-4">
-                    <h2 className="text-gray-700">Boost your product and service's credibility by adding testimonials from your clients. People love recommendations so feedback from others who've tried it is invaluable.</h2>
+                    <h2 className="text-gray-700">Blog-GN is a game-changer for our email marketing campaigns. Persuasive, personalized emails that deliver great results. Saves us time!</h2>
                     <br></br>
                     <p className="text-md font-semibold mb-2">- Hailey Copeland, The Plew</p>
                   </div>
@@ -211,9 +218,9 @@ function Landing() {
                     />
                   </div>
                   <div className="w-2/3 p-4">
-                    <h2 className="text-gray-700">Boost your product and service's credibility by adding testimonials from your clients. People love recommendations so feedback from others who've tried it is invaluable.</h2>
+                    <h2 className="text-gray-700">Blog-GN revolutionized our ad copy creation process. Attention-grabbing content in minutes. User-friendly platform, outstanding support.</h2>
                     <br></br>
-                    <p className="text-md font-semibold mb-2">- Thomas Larson, Buchanan Ventures</p>
+                    <p className="text-md font-semibold mb-2">- Wendy Salinas, Rolk Inc</p>
                   </div>
                 </div>
               </div>
@@ -229,18 +236,22 @@ function Landing() {
               <div className="">
                 <h1 className="text-6xl text-white font-bold text-center">Let's Work Together</h1>
               </div>
-              <div className="flex items-end justify-evenly text-2xl text-white font-bold">
+              <div className="flex items-end justify-evenly text-2xl text-white font-bold mb-10">
                   <span>
-                    <h5>Phone</h5>
-                    <p>93509820952</p>
+                    <h5 className="text-4xl text-[#d4ddb7] font-semibold text-center m-5">Phone</h5>
+                    <p>(123) 456-7890</p>
                   </span>
                   <span>
-                    <h5>Email</h5>
+                    <h5 className="text-4xl text-[#d4ddb7] font-semibold text-center m-5">Email</h5>
                     <p>blogn@gmail.com</p>
                   </span>
                   <span>
-                    <h5>Social Media</h5>
-                    <p>@bloggn</p>
+                    <h5 className="text-4xl text-[#d4ddb7] font-semibold text-center m-5">Social Media</h5>
+                    <div className='flex justify-center'>
+                      <p className='p-2'><FaFacebookF/></p>
+                      <p className='p-2'><BsTwitter/></p>
+                      <p className='p-2'><BsInstagram/></p>
+                    </div>
                   </span>
               </div>
           </div>
