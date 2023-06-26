@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import { DataContext } from "../context/DataProvider";
 import { TypeAnimation } from "react-type-animation";
 
 import Editor from "../components/Editor";
@@ -18,6 +19,8 @@ const Edit: React.FC = () => {
   const [data, setData] = useState<string>("");
   const [typebuffer, setTypebuffer] = useState<string>("");
   const [typeIndex, setTypeIndex] = useState(0);
+
+  const { workData, setWorkData } = useContext(DataContext);
 
   const checkAndCreateLocalStorageItem = (): void => {
     const key: string = "application_data";
@@ -111,7 +114,7 @@ const Edit: React.FC = () => {
     <div>
       <Header />
       <div className="">
-        <Editor con={content} onChange={setContent} />
+        <Editor con={workData?.body} onChange={setContent} />
       </div>
     </div>
   );

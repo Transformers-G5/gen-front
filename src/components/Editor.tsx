@@ -18,7 +18,7 @@ const modules = {
 };
 
 interface Content {
-  con: string;
+  con: string | undefined;
   onChange: React.Dispatch<React.SetStateAction<string>>
 }
 

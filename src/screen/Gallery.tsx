@@ -1,5 +1,6 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState, useContext } from "react";
 import parse from "html-react-parser";
+import { DataContext } from "../context/DataProvider";
 
 import Header from "../components/WSHeader";
 
@@ -112,6 +113,7 @@ interface StoredData {
   heading: string;
   description: string;
   date: string;
+  uid: string;
 }
 
 type StoredDataArray = StoredData[];
@@ -121,6 +123,9 @@ const Gallery = () => {
   const [selectedHeading, setSelectedHeading] = useState<string>("");
   const [selectedBody, setSelectedBody] = useState<string>("");
   const [selectedDate, setSelectedDate] = useState<string>("");
+  const [selectedUid, setSelectedUid] = useState<string>("");
+
+  const { setWorkData } = useContext(DataContext);
 
   const getItemFromLocalStorage = (key: string): any => {
     const itemString: string | null = localStorage.getItem(key);
@@ -143,6 +148,14 @@ const Gallery = () => {
     setData(retrievedItem.data);
   }, []);
 
+  const handleEdit = (): void => {
+    setWorkData({
+      uid: selectedUid,
+      body: selectedBody,
+      title: selectedHeading,
+    });
+  };
+
   return (
     <div className="h-full">
       <Header />
@@ -154,6 +167,7 @@ const Gallery = () => {
                 setSelectedHeading(item.heading);
                 setSelectedBody(item.description);
                 setSelectedDate(item.date);
+                setSelectedUid(item.uid);
               }}
             >
               <ContentPreviewCard
@@ -165,6 +179,7 @@ const Gallery = () => {
           ))}
         </div>
         <div className="w-1/2 border-l p-12">
+          <button onClick={handleEdit}>Edit</button>
           <h1 className="text-2xl font-bold">{parse(selectedHeading)}</h1>
           <p>{parse(selectedBody)}</p>
         </div>
