@@ -141,10 +141,17 @@ const Marketing = () => {
     return dateTimeString;
   };
 
+  const generateUniqueID = (): string => {
+    const timestamp = Date.now().toString();
+    const randomNum = Math.floor(Math.random() * 100000).toString();
+    return timestamp + randomNum;
+  };
+
   const handleSave = (): void => {
     console.log("Saving");
     const currentDateTime: string = getCurrentDateTimeString();
     updateItemInLocalStorage("application_data", {
+      id: generateUniqueID(),
       heading: prompt,
       description: outputResult,
       date: currentDateTime,

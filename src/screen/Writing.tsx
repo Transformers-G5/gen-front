@@ -70,7 +70,6 @@ const Writing: React.FC = () => {
 
   const updateItemInLocalStorage = (key: string, newItem: object): void => {
     const itemString: string | null = localStorage.getItem(key);
-
     if (itemString) {
       try {
         const parsedItem: ApplicationData = JSON.parse(itemString);
@@ -99,10 +98,17 @@ const Writing: React.FC = () => {
     setTypebuffer(res.data.text);
   };
 
+  const generateUniqueID = (): string => {
+    const timestamp = Date.now().toString();
+    const randomNum = Math.floor(Math.random() * 100000).toString();
+    return timestamp + randomNum;
+  };
+
   const handleSave = (): void => {
     console.log("Saving");
     const currentDateTime: string = getCurrentDateTimeString();
     updateItemInLocalStorage("application_data", {
+      id: generateUniqueID(),
       heading: heading,
       description: content,
       date: currentDateTime,
@@ -136,11 +142,24 @@ const Writing: React.FC = () => {
       <div className="mt-10 px-16">
         <div className="w-full flex mb-4 pb-4 border-b ">
           <div className="w-1/2 flex justify-evenly">
-            <button className="bg-gray-500 hover:bg-gray-300 text-white px-4 rounded-lg" onClick={handleGetSelectedText}>
+            <button
+              className="bg-gray-500 hover:bg-gray-300 text-white px-4 rounded-lg"
+              onClick={handleGetSelectedText}
+            >
               Generate with Selected Text
             </button>
-            <button className="bg-gray-500 hover:bg-gray-300 text-white px-4 rounded-lg" onClick={handleGenerate}>Generate with All</button>
-            <button className="bg-gray-500 hover:bg-gray-300 text-white px-4 rounded-lg" onClick={handleSave}>Save</button>
+            <button
+              className="bg-gray-500 hover:bg-gray-300 text-white px-4 rounded-lg"
+              onClick={handleGenerate}
+            >
+              Generate with All
+            </button>
+            <button
+              className="bg-gray-500 hover:bg-gray-300 text-white px-4 rounded-lg"
+              onClick={handleSave}
+            >
+              Save
+            </button>
           </div>
           <div className="w-1/2">
             <div>
