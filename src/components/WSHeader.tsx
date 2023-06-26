@@ -9,7 +9,6 @@ const AvatarMenue = () => {
     { title: "Dashboard", path: "javascript:void(0)" },
     { title: "Analytics", path: "javascript:void(0)" },
     { title: "Profile", path: "javascript:void(0)" },
-    { title: "Settings", path: "javascript:void(0)" },
   ];
 
   useEffect(() => {
@@ -64,7 +63,6 @@ export default () => {
   const navigation = [
     { title: "Pro version", path: "javascript:void(0)" },
     { title: "Report bug", path: "javascript:void(0)" },
-    { title: "Settings", path: "javascript:void(0)" },
   ];
 
   const submenuNav = [

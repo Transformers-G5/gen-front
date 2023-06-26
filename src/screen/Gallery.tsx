@@ -1,7 +1,9 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
+import parse from "html-react-parser";
+
 import Header from "../components/WSHeader";
 
-const data = [
+const data_fake = [
   {
     heading: "Revolutionize Your Business with Cutting-Edge Solutions",
     description:
@@ -70,6 +72,10 @@ interface MyComponentProps {
   date: string;
 }
 
+const removeHtmlTags = (text: string): string => {
+  return text.replace(/<[^>]+>/g, "");
+};
+
 const ContentPreviewCard: React.FC<MyComponentProps> = ({
   head,
   desc,
@@ -84,39 +90,83 @@ const ContentPreviewCard: React.FC<MyComponentProps> = ({
   };
 
   return (
-    <div className="max-w-sm border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 p-4 flex flex-col justify-between">
-      <div className="bg-violet-800">
+    <div className="max-w-sm border border-gray-200 border-t-4 border-t-orange-600 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 p-4 flex flex-col justify-between cursor-pointer">
+      <div className="">
         <a href="#">
           <h5 className="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
-            {head}
+            {removeHtmlTags(head)}
           </h5>
         </a>
         <p className="mb-3 font-normal text-sm text-gray-700 dark:text-gray-400">
-          {truncateString(desc)}
+          {truncateString(removeHtmlTags(desc))}
         </p>
       </div>
-      <div className=" bg-green-600">
-        <div className="text-xs text-gray-600">DATE</div>
+      <div className="">
+        <div className="text-xs text-gray-600">{date}</div>
       </div>
     </div>
   );
 };
 
+interface StoredData {
+  heading: string;
+  description: string;
+  date: string;
+}
+
+type StoredDataArray = StoredData[];
+
 const Gallery = () => {
+  const [data, setData] = useState<StoredDataArray>([]);
+  const [selectedHeading, setSelectedHeading] = useState<string>("");
+  const [selectedBody, setSelectedBody] = useState<string>("");
+  const [selectedDate, setSelectedDate] = useState<string>("");
+
+  const getItemFromLocalStorage = (key: string): any => {
+    const itemString: string | null = localStorage.getItem(key);
+
+    if (itemString) {
+      try {
+        const parsedItem: any = JSON.parse(itemString);
+        return parsedItem;
+      } catch (error) {
+        console.error("Error parsing JSON:", error);
+      }
+    }
+
+    return null;
+  };
+
+  useEffect(() => {
+    const retrievedItem: any = getItemFromLocalStorage("application_data");
+    // console.log(retrievedItem.data);
+    setData(retrievedItem.data);
+  }, []);
+
   return (
     <div className="h-full">
       <Header />
-      <div className="mt-10 px-16">
-        <div className="grid grid-cols-4 gap-6">
+      <div className="flex h-[90%]">
+        <div className="w-1/2 py-12 px-16 grid grid-cols-2 gap-6 overflow-y-scroll">
           {data.map((item) => (
-            <>
+            <div
+              onClick={() => {
+                setSelectedHeading(item.heading);
+                setSelectedBody(item.description);
+                setSelectedDate(item.date);
+              }}
+            >
               <ContentPreviewCard
                 head={item.heading}
                 desc={item.description}
                 date={item.date}
               />
-            </>
+            </div>
           ))}
+        </div>
+        <div className="w-1/2 border-l p-12">
+          <h1 className="text-2xl font-bold">{parse(selectedHeading)}</h1>
+          <p>{parse(selectedBody)}</p>
         </div>
       </div>
     </div>

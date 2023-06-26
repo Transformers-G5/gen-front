@@ -1,26 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Header from "./WSHeader";
-import DropSearch from "./DropSearch";
+import Header from "../components/WSHeader";
+import DropSearch from "../components/DropSearch";
 import { TypeAnimation } from "react-type-animation";
 
-const output_text_1 = `Introducing the revolutionary "GlowPro" skincare device,`;
-
-const output_text_2 = `Introducing the revolutionary "GlowPro" skincare device, your ultimate companion for achieving radiant and youthful-looking skin.`;
-
-const output_text_3 = `Introducing the revolutionary "GlowPro" skincare device, your ultimate companion for achieving radiant and youthful-looking skin. With its advanced technology and innovative features, GlowPro takes your skincare routine to the next level. The device utilizes gentle vibrations and LED light therapy to stimulate collagen production, diminish fine lines, and improve skin elasticity. Say goodbye to dullness and hello to a glowing complexion!`;
-
-const output_text_4 = `Introducing the revolutionary "GlowPro" skincare device, your ultimate companion for achieving radiant and youthful-looking skin. With its advanced technology and innovative features, GlowPro takes your skincare routine to the next level. The device utilizes gentle vibrations and LED light therapy to stimulate collagen production, diminish fine lines, and improve skin elasticity. Say goodbye to dullness and hello to a glowing complexion!
-
-But that's not all. GlowPro is designed with convenience in mind. Its compact size and cordless operation make it perfect for on-the-go use.`;
-
-const output_text_5 = `Introducing the revolutionary "GlowPro" skincare device, your ultimate companion for achieving radiant and youthful-looking skin. With its advanced technology and innovative features, GlowPro takes your skincare routine to the next level. The device utilizes gentle vibrations and LED light therapy to stimulate collagen production, diminish fine lines, and improve skin elasticity. Say goodbye to dullness and hello to a glowing complexion!
-
-But that's not all. GlowPro is designed with convenience in mind. Its compact size and cordless operation make it perfect for on-the-go use. Whether you're traveling or simply on a busy schedule, you can easily incorporate this powerful skincare tool into your daily routine. Experience the transformative effects of professional-grade skincare treatments in the comfort of your own home with GlowPro. It's time to unleash your skin's potential and reveal a luminous, youthful glow with the "GlowPro" skincare device. Embrace the future of skincare technology and let your radiance shine through!`;
-
-const Test = () => {
+const Marketing = () => {
   const [outputMode, setOutputMode] = useState<Boolean>(false);
   const [isCardGridHidden, setIsCardGridHidden] = useState<Boolean>(false);
+  const [isWriterMovedUp, setIsWriterMovedUp] = useState<Boolean>(false);
 
   const [showWritter, setShowWritter] = useState(false);
 
@@ -120,12 +107,75 @@ const Test = () => {
     set(text);
   };
 
+  interface ApplicationData {
+    last_updated: string;
+    data: object[];
+  }
+
+  const updateItemInLocalStorage = (key: string, newItem: object): void => {
+    const itemString: string | null = localStorage.getItem(key);
+
+    if (itemString) {
+      try {
+        const parsedItem: ApplicationData = JSON.parse(itemString);
+        parsedItem.data.push(newItem);
+        const updatedItemString: string = JSON.stringify(parsedItem);
+        localStorage.setItem(key, updatedItemString);
+      } catch (error) {
+        console.error("Error parsing JSON:", error);
+      }
+    }
+  };
+
+  const getCurrentDateTimeString = (): string => {
+    const currentDate = new Date();
+
+    const year = currentDate.getFullYear();
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, "0");
+    const day = currentDate.getDate().toString().padStart(2, "0");
+    const hours = currentDate.getHours().toString().padStart(2, "0");
+    const minutes = currentDate.getMinutes().toString().padStart(2, "0");
+
+    const dateTimeString = `${year}-${month}-${day} ${hours}:${minutes}`;
+
+    return dateTimeString;
+  };
+
+  const handleSave = (): void => {
+    console.log("Saving");
+    const currentDateTime: string = getCurrentDateTimeString();
+    updateItemInLocalStorage("application_data", {
+      heading: prompt,
+      description: outputResult,
+      date: currentDateTime,
+    });
+  };
+
   return (
     <div>
       <Header />
       <div className="">
         <div className="flex mt-10 px-16">
           <div className="w-1/2 pr-10">
+            {/* Model Selector */}
+            <div className="mb-5 flex items-end">
+              <div className=" w-full">
+                <label className="block py-2 text-gray-500">Select Model</label>
+                <DropSearch
+                  selectedItem={selectedItem}
+                  setSelectedItem={setSelectedItem}
+                />
+              </div>
+              <div className="ml-5">
+                <button
+                  type="button"
+                  onClick={handleGenerate}
+                  className="focus:outline-none text-white bg-indigo-600 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg px-5 py-3"
+                >
+                  Generate
+                </button>
+              </div>
+            </div>
             {/* Main Prompt */}
             <div className="mb-5">
               <label htmlFor="website-url" className="block py-2 text-gray-500">
@@ -145,27 +195,6 @@ const Test = () => {
                   id="website-url"
                   className="w-full p-2.5 ml-2 bg-transparent outline-none"
                 />
-              </div>
-            </div>
-            {/* Model Selector */}
-            <div className="mb-5 flex items-end">
-              <div className=" w-full">
-                <label className="block py-2 text-gray-500">
-                  Write a promt to get things started
-                </label>
-                <DropSearch
-                  selectedItem={selectedItem}
-                  setSelectedItem={setSelectedItem}
-                />
-              </div>
-              <div className="ml-5">
-                <button
-                  type="button"
-                  onClick={handleGenerate}
-                  className="focus:outline-none text-white bg-indigo-600 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg px-5 py-3"
-                >
-                  Generate
-                </button>
               </div>
             </div>
           </div>
@@ -224,37 +253,59 @@ const Test = () => {
           </div>
         </div>
         {showWritter ? (
-          <div className="border-t mt-10 px-16 pt-10">
-            <TypeAnimation
-              repeat={0}
-              speed={99}
-              style={{
-                whiteSpace: "pre-line",
-                height: "195px",
-                display: "block",
-              }}
-              sequence={[
-                "Generating output.",
-                1000,
-                `Generating output. Using Model ${selectedItem.item}.`,
-                1000,
-                "Reading data from server.",
-                1000,
-                outputResult,
-                () => {
-                  console.log("ENDED");
-                },
-                // output_text_1,
-                // 1000,
-                // output_text_2,
-                // 500,
-                // output_text_3,
-                // 1500,
-                // output_text_4,
-                // 500,
-                // output_text_5,
-              ]}
-            />
+          <div className="border-t mt-10">
+            <div className="px-16 border-t border-t-gray-300 border-b border-b-gray-200 w-full h-16 flex items-center justify-between">
+              <div className="w-1/2 flex justify-between">
+                <button className="bg-gray-600 hover:bg-gray-800 text-white px-3 py-2 text-xs rounded-lg">
+                  Regenerate
+                </button>
+                <button className="bg-gray-600 hover:bg-gray-800 text-white px-3 py-2 text-xs rounded-lg">
+                  Regenerate with more words
+                </button>
+                <button className="bg-gray-600 hover:bg-gray-800 text-white px-3 py-2 text-xs rounded-lg">
+                  Regenerate with less words
+                </button>
+              </div>
+              <div className="w-1/2 flex justify-end">
+                <button className="bg-gray-600 hover:bg-gray-800 text-white px-3 py-2 text-xs rounded-lg">
+                  Edit
+                </button>
+                <button
+                  className="bg-gray-600 hover:bg-gray-800 text-white px-3 py-2 text-xs rounded-lg"
+                  onClick={handleSave}
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+            <div
+              className={`px-16 pt-10 transition-all delay-1000 duration-1000 ${
+                isWriterMovedUp ? "" : "-translate-y-16"
+              } bg-white`}
+            >
+              <TypeAnimation
+                repeat={0}
+                speed={99}
+                style={{
+                  whiteSpace: "pre-line",
+                  height: "195px",
+                  display: "block",
+                }}
+                sequence={[
+                  "Generating output.",
+                  1000,
+                  `Generating output. Using Model ${selectedItem.item}.`,
+                  1000,
+                  "Reading data from server.",
+                  1000,
+                  outputResult,
+                  () => {
+                    console.log("ENDED");
+                    setIsWriterMovedUp(true);
+                  },
+                ]}
+              />
+            </div>
           </div>
         ) : null}
       </div>
@@ -262,4 +313,4 @@ const Test = () => {
   );
 };
 
-export default Test;
+export default Marketing;

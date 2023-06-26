@@ -1,9 +1,10 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import WorkspaceLayout from "./layout/Workspace";
-import Test from "./components/Test";
+import Marketing from "./screen/Marketing";
 import Gallery from "./screen/Gallery";
 import Edit from "./screen/Edit";
+import Writing from "./screen/Writing";
 import "./App.css";
 
 function App() {
@@ -11,9 +12,10 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<WorkspaceLayout />}>
-          <Route index element={<Test />} />
+          <Route index element={<Marketing />} />
           <Route path="gallery" element={<Gallery />} />
-          <Route path="edit" element={<Edit />} />
+          <Route path="writing" element={<Writing />} />
+          <Route path="editor" element={<Edit />} />
         </Route>
       </Routes>
     </BrowserRouter>
