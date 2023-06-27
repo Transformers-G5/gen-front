@@ -165,7 +165,7 @@ const Gallery = () => {
       title: selectedHeading,
     });
     setWorkData(data);
-    navigate("/editor");
+    navigate("/work/editor");
   };
 
   return (

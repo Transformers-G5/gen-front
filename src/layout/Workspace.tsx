@@ -16,7 +16,7 @@ const Workspace = () => {
       <div className="flex h-full">
         <div className="w-[5rem] bg-zinc-800 hidden lg:block">
           <ul className="text-white h-full flex flex-col justify-evenly">
-            <Link to="/">
+            <Link to="/work">
               <li className="text-center py-6 cursor-pointer hover:bg-indigo-900 flex items-center justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +34,7 @@ const Workspace = () => {
                 </svg>
               </li>
             </Link>
-            <Link to="writing">
+            <Link to="/work/writing">
               <li className="text-center py-6 cursor-pointer hover:bg-indigo-900 flex items-center justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -52,7 +52,7 @@ const Workspace = () => {
                 </svg>
               </li>
             </Link>
-            <Link to="gallery">
+            <Link to="/work/gallery">
               <li className="text-center py-6 cursor-pointer hover:bg-indigo-900 flex items-center justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -70,7 +70,7 @@ const Workspace = () => {
                 </svg>
               </li>
             </Link>
-            <Link to="editor">
+            <Link to="/work/editor">
               <li className="text-center py-6 cursor-pointer hover:bg-indigo-900 flex items-center justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -118,9 +118,8 @@ const Workspace = () => {
         <div className="w-full relative">
           <div className="h-full bg-indigo-900">SETTINGS</div>
           <div
-            className={` overflow-scroll absolute bg-white top-0 bottom-0 right-0 left-0 transition-all ${
-              showPanel ? " translate-x-96" : null
-            }`}
+            className={` overflow-scroll absolute bg-white top-0 bottom-0 right-0 left-0 transition-all ${showPanel ? " translate-x-96" : null
+              }`}
           >
             <Outlet />
           </div>
