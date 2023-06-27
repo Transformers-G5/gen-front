@@ -7,7 +7,6 @@ interface Selector {
 
 export default (props: Selector) => {
   const menuItems = [
-    "Blog (Transformer)",
     "Email (Transformer)",
     "Restaurant (Transformer)",
     "Education (Transformer)",

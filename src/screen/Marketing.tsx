@@ -3,15 +3,18 @@ import axios from "axios";
 import Header from "../components/WSHeader";
 import DropSearch from "../components/DropSearch";
 import { TypeAnimation } from "react-type-animation";
+import { LineWave } from "react-loader-spinner";
 
 const Marketing = () => {
   const [outputMode, setOutputMode] = useState<Boolean>(false);
   const [isCardGridHidden, setIsCardGridHidden] = useState<Boolean>(false);
   const [isWriterMovedUp, setIsWriterMovedUp] = useState<Boolean>(false);
+  const [isLoadning, setIsLoadning] = useState<Boolean>(false);
 
   const [showWritter, setShowWritter] = useState(false);
 
   const [prompt, setPrompt] = useState<string>("");
+  const [entityName, setEntityName] = useState<string>("");
 
   const [outputResult, setOutputResult] = useState<string>("");
 
@@ -69,7 +72,6 @@ const Marketing = () => {
   ));
 
   const api_map = [
-    "http://localhost:4040/api/gentext/blog",
     "http://localhost:4040/api/gentext/marketing/email",
     "http://localhost:4040/api/gentext/marketing/restaurant",
     "http://localhost:4040/api/gentext/marketing/school",
@@ -78,6 +80,8 @@ const Marketing = () => {
   ];
 
   const handleGenerate = async (): Promise<any> => {
+    setIsLoadning(true);
+    setIsWriterMovedUp(false);
     setShowWritter(false);
     setOutputMode(true);
     setTimeout(() => {
@@ -88,19 +92,19 @@ const Marketing = () => {
     //   max_len: 500,
     // };
     let data;
-    if (selectedItem.idx === 0) data = { prompt, max_len: 200 };
-    if (selectedItem.idx === 1) data = { prompt: "", max_len: 200, name: "" };
-    if (selectedItem.idx === 2) data = { prompt: "", max_len: 200, name: "" };
-    if (selectedItem.idx === 3) data = { prompt: "", max_len: 200, name: "" };
-    if (selectedItem.idx === 4)
+    if (selectedItem.idx === 0) data = { prompt, max_len: 200, name: entityName };
+    if (selectedItem.idx === 1) data = { prompt, max_len: 200, name: entityName };
+    if (selectedItem.idx === 2) data = { prompt, max_len: 200, name: entityName };
+    if (selectedItem.idx === 3)
       data = { prompt, numberOfWords: 30, language: "english" };
-    if (selectedItem.idx === 5)
+    if (selectedItem.idx === 4)
       data = { prompt, numberOfWords: 30, language: "assamese" };
 
     const res = await axios.post(api_map[selectedItem.idx], data);
     console.log(res.data.text);
     setOutputResult(res.data.text);
     setShowWritter(true);
+    setIsLoadning(false);
   };
 
   const onTextChangeHandler = (set: any, text: string): void => {
@@ -155,6 +159,18 @@ const Marketing = () => {
       heading: prompt,
       description: outputResult,
       date: currentDateTime,
+      type:
+        selectedItem.idx === 0
+          ? "email"
+          : selectedItem.idx === 1
+          ? "restaurant"
+          : selectedItem.idx === 2
+          ? "school"
+          : selectedItem.idx === 3
+          ? "english-caption"
+          : selectedItem.idx === 3
+          ? "assamese-caption"
+          : "",
     });
   };
 
@@ -163,16 +179,71 @@ const Marketing = () => {
       <Header />
       <div className="">
         <div className="flex mt-10 px-16">
-          <div className="w-1/2 pr-10">
-            {/* Model Selector */}
-            <div className="mb-5 flex items-end">
-              <div className=" w-full">
+          <div className="flex w-full">
+            {/* Main Prompt */}
+            <div className="mb-5 w-1/3 mr-6">
+              <div className="w-full">
                 <label className="block py-2 text-gray-500">Select Model</label>
                 <DropSearch
                   selectedItem={selectedItem}
                   setSelectedItem={setSelectedItem}
                 />
               </div>
+            </div>
+            {/* Model Selector */}
+            <div className="mb-5 flex items-end w-2/3">
+              <div className="w-full">
+                <label
+                  htmlFor="website-url"
+                  className="block py-2 text-gray-500"
+                >
+                  Write a promt to get things started
+                </label>
+                <div className="flex items-center text-gray-400 border rounded-md">
+                  <div className="px-3 py-2.5 rounded-l-md bg-gray-50 border-r">
+                    Prompt
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="hello world"
+                    value={prompt}
+                    onChange={(e) => {
+                      onTextChangeHandler(setPrompt, e.target.value);
+                    }}
+                    id="website-url"
+                    className="w-full p-2.5 ml-2 bg-transparent outline-none"
+                  />
+                </div>
+              </div>
+
+              {selectedItem.idx === 0 ||
+              selectedItem.idx === 1 ||
+              selectedItem.idx === 2 ? (
+                <div className="w-full ml-4">
+                  <label
+                    htmlFor="website-url"
+                    className="block py-2 text-gray-500"
+                  >
+                    Name of the party
+                  </label>
+                  <div className="flex items-center text-gray-400 border rounded-md">
+                    <div className="px-3 py-2.5 rounded-l-md bg-gray-50 border-r">
+                      Name
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Marcus"
+                      value={entityName}
+                      onChange={(e) => {
+                        onTextChangeHandler(setEntityName, e.target.value);
+                      }}
+                      id="website-url"
+                      className="w-full p-2.5 ml-2 bg-transparent outline-none"
+                    />
+                  </div>
+                </div>
+              ) : null}
+
               <div className="ml-5">
                 <button
                   type="button"
@@ -183,29 +254,8 @@ const Marketing = () => {
                 </button>
               </div>
             </div>
-            {/* Main Prompt */}
-            <div className="mb-5">
-              <label htmlFor="website-url" className="block py-2 text-gray-500">
-                Write a promt to get things started
-              </label>
-              <div className="flex items-center text-gray-400 border rounded-md">
-                <div className="px-3 py-2.5 rounded-l-md bg-gray-50 border-r">
-                  Prompt
-                </div>
-                <input
-                  type="text"
-                  placeholder="hello world"
-                  value={prompt}
-                  onChange={(e) => {
-                    onTextChangeHandler(setPrompt, e.target.value);
-                  }}
-                  id="website-url"
-                  className="w-full p-2.5 ml-2 bg-transparent outline-none"
-                />
-              </div>
-            </div>
           </div>
-          <div className="w-1/2 pt-10 pl-10">
+          {/* <div className="w-1/2 pt-10 pl-10">
             <div className="h-40 rounded-lg border-2 border-dashed flex items-center justify-center">
               <label
                 htmlFor="file"
@@ -235,7 +285,7 @@ const Marketing = () => {
               </label>
               <input id="file" type="file" className="hidden" />
             </div>
-          </div>
+          </div> */}
         </div>
         <div className={`mt-10 px-16 ${isCardGridHidden ? "hidden" : ""}`}>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
@@ -259,62 +309,69 @@ const Marketing = () => {
             {gridElementsHistory}
           </div>
         </div>
-        {showWritter ? (
-          <div className="border-t mt-10">
-            <div className="px-16 border-t border-t-gray-300 border-b border-b-gray-200 w-full h-16 flex items-center justify-between">
-              <div className="w-1/2 flex justify-between">
-                <button className="bg-gray-600 hover:bg-gray-800 text-white px-3 py-2 text-xs rounded-lg">
-                  Regenerate
-                </button>
-                <button className="bg-gray-600 hover:bg-gray-800 text-white px-3 py-2 text-xs rounded-lg">
-                  Regenerate with more words
-                </button>
-                <button className="bg-gray-600 hover:bg-gray-800 text-white px-3 py-2 text-xs rounded-lg">
-                  Regenerate with less words
-                </button>
-              </div>
-              <div className="w-1/2 flex justify-end">
-                <button className="bg-gray-600 hover:bg-gray-800 text-white px-3 py-2 text-xs rounded-lg">
-                  Edit
-                </button>
-                <button
-                  className="bg-gray-600 hover:bg-gray-800 text-white px-3 py-2 text-xs rounded-lg"
-                  onClick={handleSave}
-                >
-                  Save
-                </button>
-              </div>
-            </div>
-            <div
-              className={`px-16 pt-10 transition-all delay-1000 duration-1000 ${
-                isWriterMovedUp ? "" : "-translate-y-16"
-              } bg-white`}
-            >
-              <TypeAnimation
-                repeat={0}
-                speed={99}
-                style={{
-                  whiteSpace: "pre-line",
-                  height: "195px",
-                  display: "block",
-                }}
-                sequence={[
-                  "Generating output.",
-                  1000,
-                  `Generating output. Using Model ${selectedItem.item}.`,
-                  1000,
-                  "Reading data from server.",
-                  1000,
-                  outputResult,
-                  () => {
-                    console.log("ENDED");
-                    setIsWriterMovedUp(true);
-                  },
-                ]}
-              />
-            </div>
+        {isLoadning ? (
+          <div className="flex w-full justify-center items-center">
+            <LineWave
+              height="300"
+              width="300"
+              color="#4f46e5"
+              ariaLabel="line-wave"
+              wrapperStyle={{}}
+              wrapperClass=""
+              visible={true}
+              firstLineColor=""
+              middleLineColor=""
+              lastLineColor=""
+            />
           </div>
-        ) : null}
+        ) : (
+          <>
+            {showWritter ? (
+              <div className="border-t mt-10">
+                <div className="px-16 border-t border-t-gray-300 border-b border-b-gray-200 w-full h-16 flex items-center justify-between">
+                  <div className="w-1/2 flex justify-betwee">
+                    Title: {prompt}
+                  </div>
+                  <div className="w-1/2 flex justify-end">
+                    <button className="bg-indigo-600 hover:bg-indigo-800  text-white px-3 py-2 text-xs rounded-lg mr-4">
+                      Edit
+                    </button>
+                    <button
+                      className="bg-indigo-600 hover:bg-indigo-800  text-white px-3 py-2 text-xs rounded-lg"
+                      onClick={handleSave}
+                    >
+                      Save
+                    </button>
+                  </div>
+                </div>
+                <div
+                  className={`px-16 pt-10 transition-all delay-1000 duration-1000 ${
+                    isWriterMovedUp ? "" : "-translate-y-16"
+                  } bg-white`}
+                >
+                  <TypeAnimation
+                    repeat={0}
+                    speed={99}
+                    style={{
+                      whiteSpace: "pre-line",
+                      height: "195px",
+                      display: "block",
+                    }}
+                    sequence={[
+                      `Generating output. Using Model ${selectedItem.item}.`,
+                      1000,
+                      outputResult,
+                      () => {
+                        console.log("ENDED");
+                        setIsWriterMovedUp(true);
+                      },
+                    ]}
+                  />
+                </div>
+              </div>
+            ) : null}
+          </>
+        )}
       </div>
     </div>
   );

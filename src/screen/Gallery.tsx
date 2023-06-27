@@ -1,8 +1,10 @@
 import React, { FC, useEffect, useState, useContext } from "react";
 import parse from "html-react-parser";
 import { DataContext } from "../context/DataProvider";
+import { useNavigate } from "react-router-dom";
 
 import Header from "../components/WSHeader";
+import { workerData } from "worker_threads";
 
 const data_fake = [
   {
@@ -113,19 +115,21 @@ interface StoredData {
   heading: string;
   description: string;
   date: string;
-  uid: string;
+  id: string;
 }
 
 type StoredDataArray = StoredData[];
 
 const Gallery = () => {
+  const navigate = useNavigate();
+
   const [data, setData] = useState<StoredDataArray>([]);
   const [selectedHeading, setSelectedHeading] = useState<string>("");
   const [selectedBody, setSelectedBody] = useState<string>("");
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [selectedUid, setSelectedUid] = useState<string>("");
 
-  const { setWorkData } = useContext(DataContext);
+  const { workData, setWorkData } = useContext(DataContext);
 
   const getItemFromLocalStorage = (key: string): any => {
     const itemString: string | null = localStorage.getItem(key);
@@ -145,15 +149,23 @@ const Gallery = () => {
   useEffect(() => {
     const retrievedItem: any = getItemFromLocalStorage("application_data");
     // console.log(retrievedItem.data);
-    setData(retrievedItem.data);
+    if (retrievedItem) setData(retrievedItem.data);
   }, []);
 
   const handleEdit = (): void => {
-    setWorkData({
+    let data: any;
+    if (workData == null) {
+      data = [];
+    } else {
+      data = workData;
+    }
+    data?.push({
       uid: selectedUid,
       body: selectedBody,
       title: selectedHeading,
     });
+    setWorkData(data);
+    navigate("/editor");
   };
 
   return (
@@ -167,7 +179,7 @@ const Gallery = () => {
                 setSelectedHeading(item.heading);
                 setSelectedBody(item.description);
                 setSelectedDate(item.date);
-                setSelectedUid(item.uid);
+                setSelectedUid(item.id);
               }}
             >
               <ContentPreviewCard
@@ -179,9 +191,22 @@ const Gallery = () => {
           ))}
         </div>
         <div className="w-1/2 border-l p-12">
-          <button onClick={handleEdit}>Edit</button>
-          <h1 className="text-2xl font-bold">{parse(selectedHeading)}</h1>
-          <p>{parse(selectedBody)}</p>
+          {selectedBody.length > 0 ? (
+            <>
+              <button onClick={handleEdit} className="mb-8">
+                Edit
+              </button>
+              <button onClick={handleEdit} className="mb-8 ml-10">
+                Delete
+              </button>
+              <h1 className="text-2xl font-bold">{parse(selectedHeading)}</h1>
+              <p>{parse(selectedBody)}</p>
+            </>
+          ) : (
+            <div className="text-gray-400 flex justify-center items-center h-full">
+              select to get preview
+            </div>
+          )}
         </div>
       </div>
     </div>

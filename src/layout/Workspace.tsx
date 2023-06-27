@@ -14,7 +14,7 @@ const Workspace = () => {
   return (
     <div className="h-screen w-screen">
       <div className="flex h-full">
-        <div className=" w-[5rem] bg-zinc-800">
+        <div className="w-[5rem] bg-zinc-800 hidden lg:block">
           <ul className="text-white h-full flex flex-col justify-evenly">
             <Link to="/">
               <li className="text-center py-6 cursor-pointer hover:bg-indigo-900 flex items-center justify-center">

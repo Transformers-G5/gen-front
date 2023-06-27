@@ -7,8 +7,8 @@ interface CurrentWorkT {
 }
 
 interface MyContextProps {
-  workData : CurrentWorkT | null;
-  setWorkData: (object: CurrentWorkT | null) => void;
+  workData : CurrentWorkT[]| null;
+  setWorkData: (object: CurrentWorkT[]| null) => void;
 }
 
 export const DataContext = createContext<MyContextProps>({
@@ -17,7 +17,7 @@ export const DataContext = createContext<MyContextProps>({
 });
 
 export const DataProvider = (props: any) => {
-  const [workData, setWorkData] = useState<CurrentWorkT | null>(null);
+  const [workData, setWorkData] = useState<CurrentWorkT[] | null>(null);
 
   return (
     <DataContext.Provider

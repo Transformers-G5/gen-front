@@ -1,6 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+
+import { DataContext } from "../context/DataProvider";
+
+interface CurrentWorkT {
+  uid: string;
+  body: string;
+  title: string;
+}
 
 const modules = {
   toolbar: [
@@ -19,11 +27,13 @@ const modules = {
 
 interface Content {
   con: string | undefined;
-  onChange: React.Dispatch<React.SetStateAction<string>>
+  onChange: (object: CurrentWorkT[] | null) => void;
+  index: number;
 }
 
 function Editor(props: Content) {
   // const [value, setValue] = useState("");
+  const { workData, setWorkData } = useContext(DataContext);
 
   // useEffect(() => {
   //   setValue(props.con);
@@ -36,7 +46,13 @@ function Editor(props: Content) {
         modules={modules}
         theme="snow"
         value={props.con}
-        onChange={props.onChange}
+        onChange={(e) => {
+          if (workData !== null) {
+            let data = workData;
+            data[props.index].body = e;
+            setWorkData(data);
+          }
+        }}
       />
     </div>
   );
