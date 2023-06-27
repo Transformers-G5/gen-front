@@ -33,7 +33,7 @@ function Landing() {
                             design, and execution so you can focus <br />
                             on your product.</p>
                         <Link
-                            to="/workspace"
+                            to="/work"
                             className="bg-[#3f4726] hover:bg-[#888f70] text-white font-bold py-2 px-8 mt-5 rounded-full"
                         >
                             Start Generating
@@ -73,7 +73,7 @@ function Landing() {
                         </div>
                         <div className="text-center p-4 flex flex-col items-center">
                             <h2 className="text-2xl font-bold m-4 ">Marketing</h2>
-                            <Link to="/workspace"
+                            <Link to="/work"
                                 className="bg-[#3f4726] hover:bg-[#888f70] text-white font-bold py-2 px-8 mt-4 rounded-full">
                                 Learn More
                             </Link>
@@ -85,7 +85,7 @@ function Landing() {
                         </div>
                         <div className="text-center p-4 flex flex-col items-center">
                             <h2 className="text-2xl font-bold m-4 ">Blogging</h2>
-                            <Link to="/workspace"
+                            <Link to="/work/writing"
                                 className="bg-[#3f4726] hover:bg-[#888f70] text-white font-bold py-2 px-8 mt-4 rounded-full">
                                 Learn More
                             </Link>
@@ -97,7 +97,7 @@ function Landing() {
                         </div>
                         <div className="text-center p-4 flex flex-col items-center">
                             <h2 className="text-2xl font-bold m-4 ">Social Media Caption</h2>
-                            <Link to="/workspace"
+                            <Link to="/work"
                                 className="bg-[#3f4726] hover:bg-[#888f70] text-white font-bold py-2 px-8 mt-4 rounded-full">
                                 Learn More
                             </Link>

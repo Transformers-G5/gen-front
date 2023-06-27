@@ -44,9 +44,8 @@ const Marketing = () => {
   const gridElementsTips = marketingTitles.map((title, index) => (
     <div
       key={index}
-      className={`bg-blue-50 p-4 text-sm rounded-md select-none cursor-pointer hover:outline outline-blue-500 inset-4 transition-all ${
-        outputMode ? "scale-0 translate-y-10" : ""
-      }`}
+      className={`bg-blue-50 p-4 text-sm rounded-md select-none cursor-pointer hover:outline outline-blue-500 inset-4 transition-all ${outputMode ? "scale-0 translate-y-10" : ""
+        }`}
     >
       {title}
     </div>
@@ -63,9 +62,8 @@ const Marketing = () => {
   const gridElementsHistory = history.map((title, index) => (
     <div
       key={index}
-      className={`bg-yellow-50 p-4 text-sm rounded-md select-none cursor-pointer hover:outline outline-yellow-500 inset-4  transition-all ${
-        outputMode ? "scale-0 translate-y-10" : ""
-      }`}
+      className={`bg-yellow-50 p-4 text-sm rounded-md select-none cursor-pointer hover:outline outline-yellow-500 inset-4  transition-all ${outputMode ? "scale-0 translate-y-10" : ""
+        }`}
     >
       {title}
     </div>
@@ -163,14 +161,14 @@ const Marketing = () => {
         selectedItem.idx === 0
           ? "email"
           : selectedItem.idx === 1
-          ? "restaurant"
-          : selectedItem.idx === 2
-          ? "school"
-          : selectedItem.idx === 3
-          ? "english-caption"
-          : selectedItem.idx === 3
-          ? "assamese-caption"
-          : "",
+            ? "restaurant"
+            : selectedItem.idx === 2
+              ? "school"
+              : selectedItem.idx === 3
+                ? "english-caption"
+                : selectedItem.idx === 3
+                  ? "assamese-caption"
+                  : "",
     });
   };
 
@@ -217,8 +215,8 @@ const Marketing = () => {
               </div>
 
               {selectedItem.idx === 0 ||
-              selectedItem.idx === 1 ||
-              selectedItem.idx === 2 ? (
+                selectedItem.idx === 1 ||
+                selectedItem.idx === 2 ? (
                 <div className="w-full ml-4">
                   <label
                     htmlFor="website-url"
@@ -290,9 +288,8 @@ const Marketing = () => {
         <div className={`mt-10 px-16 ${isCardGridHidden ? "hidden" : ""}`}>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             <div
-              className={`bg-blue-950 text-white p-4 rounded-md select-none transition-all ${
-                outputMode ? "scale-0 translate-y-10" : ""
-              }`}
+              className={`bg-blue-950 text-white p-4 rounded-md select-none transition-all ${outputMode ? "scale-0 translate-y-10" : ""
+                }`}
             >
               Our suggestions to get you started →
             </div>
@@ -300,9 +297,8 @@ const Marketing = () => {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-5">
             <div
-              className={`bg-yellow-950 text-white p-4 rounded-md select-none transition-all ${
-                outputMode ? "scale-0 translate-y-10" : ""
-              }`}
+              className={`bg-yellow-950 text-white p-4 rounded-md select-none transition-all ${outputMode ? "scale-0 translate-y-10" : ""
+                }`}
             >
               History →
             </div>
@@ -333,9 +329,6 @@ const Marketing = () => {
                     Title: {prompt}
                   </div>
                   <div className="w-1/2 flex justify-end">
-                    <button className="bg-indigo-600 hover:bg-indigo-800  text-white px-3 py-2 text-xs rounded-lg mr-4">
-                      Edit
-                    </button>
                     <button
                       className="bg-indigo-600 hover:bg-indigo-800  text-white px-3 py-2 text-xs rounded-lg"
                       onClick={handleSave}
@@ -345,9 +338,8 @@ const Marketing = () => {
                   </div>
                 </div>
                 <div
-                  className={`px-16 pt-10 transition-all delay-1000 duration-1000 ${
-                    isWriterMovedUp ? "" : "-translate-y-16"
-                  } bg-white`}
+                  className={`px-16 pt-10 transition-all delay-1000 duration-1000 ${isWriterMovedUp ? "" : "-translate-y-16"
+                    } bg-white`}
                 >
                   <TypeAnimation
                     repeat={0}

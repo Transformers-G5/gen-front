@@ -196,9 +196,9 @@ const Gallery = () => {
               <button onClick={handleEdit} className="mb-8">
                 Edit
               </button>
-              <button onClick={handleEdit} className="mb-8 ml-10">
+              {/* <button onClick={handleEdit} className="mb-8 ml-10">
                 Delete
-              </button>
+              </button> */}
               <h1 className="text-2xl font-bold">{parse(selectedHeading)}</h1>
               <p>{parse(selectedBody)}</p>
             </>
